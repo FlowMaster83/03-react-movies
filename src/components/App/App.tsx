@@ -1,27 +1,10 @@
-import axios from 'axios'
-import SearchBar from '../SearchBar/SearchBar'
 import css from './App.module.css'
+import SearchBar from '../SearchBar/SearchBar'
+// import { Toaster } from 'react-hot-toast'
+
+import { fetchMovies } from '../../services/movieService'
 
 function App() {
-
-  const fetchMovies = async (query: string) => {
-
-    const config = {
-      params: {
-        query,
-      },
-      headers: {
-        Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`
-      }
-    };
-
-    try {
-      const respones = await axios.get('https://api.themoviedb.org/3/search/movie', config);
-      console.log(respones.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   return (
     <div className={css.app}>
