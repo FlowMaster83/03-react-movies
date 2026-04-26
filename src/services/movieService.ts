@@ -13,7 +13,7 @@ export const fetchMovies = async (query: string):Promise<Movie[]> => {
         };
         
       const response:AxiosResponse<MovieResponse> = await axios.get('https://api.themoviedb.org/3/search/movie', config);
-      console.log(response.data);
+      // console.log(response.data);
       return response.data.results
     } catch (error) {
       console.error(error);

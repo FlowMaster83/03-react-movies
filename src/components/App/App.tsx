@@ -6,24 +6,34 @@ import type { Movie } from '../../types/movie'
 // import { Toaster } from 'react-hot-toast'
 
 import { fetchMovies } from '../../services/movieService'
+import MovieModal from '../MovieModal/MovieModal'
 
 function App() {
 
   const [movies, setMovies] = useState<Movie[]>([])
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null)
+
+  const openModal = (movie: Movie) => {
+    setSelectedMovie(movie)
+  }
+
+  const closeModal = () => {
+    setSelectedMovie(null)
+  }
 
   const handleSearch = async (query: string) => {
     const data = await fetchMovies(query)
     setMovies(data)
   }
 
-  const handleSelectMovie = (movie: Movie) => {
-    console.log(movie.title);
-  }
-
   return (
     <div className={css.app}>
       <SearchBar onSubmit={handleSearch} />
-      <MovieGrid movies={movies} onSelect={handleSelectMovie} />
+      <MovieGrid movies={movies} onSelect={openModal} />
+
+      {selectedMovie && (
+        <MovieModal movie={selectedMovie} onClose={closeModal} />
+      )}
     </div>
   )
 }
