@@ -1,4 +1,4 @@
-import axios, {type AxiosResponse} from "axios";
+import axios  from "axios";
 import type { Movie } from '../types/movie'
 
 export interface MovieResponse {
