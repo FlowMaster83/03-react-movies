@@ -9,7 +9,6 @@ export default function SearchBar({ onSubmit }: SearchBarProps) {
     const handleSearch = (formData: FormData) => {
         const query = formData.get('query') as string
         onSubmit(query)
-        // console.log(query);
     }
 
     return (
