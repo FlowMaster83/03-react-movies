@@ -1,13 +1,14 @@
-import css from './App.module.css'
+import toast, { Toaster } from 'react-hot-toast'
+import { useState } from 'react'
+
+import type { Movie } from '../../types/movie'
+import { fetchMovies } from '../../services/movieService'
 import SearchBar from '../SearchBar/SearchBar'
 import MovieGrid from '../MovieGrid/MovieGrid'
-import { useState } from 'react'
-import type { Movie } from '../../types/movie'
-// import { Toaster } from 'react-hot-toast'
-import { fetchMovies } from '../../services/movieService'
 import MovieModal from '../MovieModal/MovieModal'
 import Loader from '../Loader/Loader'
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
+import css from './App.module.css'
 
 function App() {
 
@@ -31,16 +32,22 @@ function App() {
 
     try {
       const data = await fetchMovies(query)
+
+      if (data.length === 0) {
+        toast('No movies found for your request.')
+      }
       setMovies(data)
     } catch (error) {
       setIsError(true)
       console.error(error);
     }
+
     setIsLoading(false)
   }
 
   return (
     <div className={css.app}>
+
       <SearchBar onSubmit={handleSearch} />
 
       {isError && <ErrorMessage />}
@@ -53,6 +60,11 @@ function App() {
       {selectedMovie && (
         <MovieModal movie={selectedMovie} onClose={closeModal} />
       )}
+
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
 
     </div>
   )
